@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Random Recipe{% endblock %}
+
+{% block content %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/jquery"></script>
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Random</title>
+</head>
+
+<body>
+<div style="align-items:center; justify-content:center; text-align: center;">
+    <h3 style="font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Enter a letter for a random recipe beginning with that letter</h3>
+
+    <form id="random-form">
+        <div><input placeholder='Enter a letter' id="letter"> <button class="btn btn-success">Go!</button></div>
+        <p><b id='random_err' class='text-danger'></b></p>
+
+    </form>
+
+    <form id='random-btn'>
+        <h4 style="font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">For a really random recipe:</h4><button id='ran-btn' class="btn btn-success mx-auto mb-3">Random!</button>
+    </form>
+
+    <div class="mb-3" id="random-results"></div>
+
+    <div class="mb-3"  id="ranbtn-results"></div>
+</div>
+
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <script src="/static/randomrecipe.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+{% endblock %}

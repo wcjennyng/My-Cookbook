@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Add a Recipe{% endblock %}
+
+{% block content %}
+
+<h2 style='margin-top: 5px;'>Add a Recipe</h2>
+
+<form method="POST">
+
+  {{ form.hidden_tag() }} 
+    {% for field in form if field.widget.input_type != 'hidden' %}
+       
+    <div class='form-group'>
+    {{ field.label }}
+    {% if field.widget.input_type != 'checkbox' %}
+        {{ field(class="form-control") }}
+    {% endif %}
+      {% if field.widget.input_type == 'checkbox' %}
+      {{ field() }}
+    {% endif %}
+        <span>
+            {% if field.errors %}
+                {% for error in field.errors %}
+	                <b class="text-danger">{{ error }}</b>
+                {% endfor %}
+            {% endif %}
+        </span>
+    </div>
+    {% endfor %}
+    
+    <button class='btn btn-success' type='submit'>Add Recipe</button>
+  </form>
+
+  {% endblock %}

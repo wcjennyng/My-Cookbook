@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ user.first_name }} {{ user.last_name }} {% endblock %}}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="/static/style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<h2 class="mb-3" style="text-align: center;">
+  Welcome back, Chef {{ user.last_name }}!</h2>
+
+
+
+
+
+<h3 style="text-align: center;" class='mb-5'>My Recipes 
+  <a id="popoverAdd" data-content="Add a recipe" rel="popover" 
+  data-placement="top" data-trigger="hover" href="/users/{{ user.username }}/userrecipe/add" 
+  class="btn btn-sm btn-success py-0 px-1 ml-1">
+    +
+  </a></h3>
+
+
+<div class="card-deck d-flex justify-content-center">
+  {% for recipe in user.recipe %}
+  <div class="card mb-3 border-info " style='max-width: 20rem; min-width: 20rem;'>
+    <img class='img-thumbnail' width='320' height='320' style="text-align: center; " src='{{recipe.image()}}'
+      alt="Card image cap">
+    <div class="card-body">
+      <h4 class="card-title text-info" style='text-align: center; padding-bottom: 2px;'>
+
+
+        {% if recipe.favorite %}
+        <i class="material-icons" style='color: lightpink; vertical-align: bottom;'>favorite</i> 
+        {% endif %}
+
+        <b>{{ recipe.name }}</b>
+      </h4>
+      <p class="card-text" style="text-align: center;">
+
+
+
+      <p> <b>Ingredients:</b>
+      <pre>{{ recipe.ingredients }}</pre>
+      </p>
+
+      <p><b>Instructions:</b>
+      <pre>{{ recipe.instructions }}</pre>
+      </p>
+
+
+
+    </div>
+    <div class="card-footer bg-transparent">
+      
+      <div class="d-flex justify-content-end">
+        <form style="display:inline;" action="/userrecipe/{{ recipe.id }}/delete" method='POST'>
+          {{ form.hidden_tag() }}
+          <button class="btn btn-sm btn-danger mx-1">X</button>
+        </form>
+        <form style="display:inline;" action='/userrecipe/{{ recipe.id }}/update'>
+          <button class='btn btn-primary btn-sm'>Edit</button>
+        </form>
+      </div>
+      <small><i class="text-muted">Added on {{ recipe.created_at }}</i></small>
+    </div>
+  </div>
+
+
+
+  {% endfor %}
+
+
+</div>
+
+<script>
+$(function () {
+  $("#popoverAdd").popover(); })</script>
+{% endblock %}

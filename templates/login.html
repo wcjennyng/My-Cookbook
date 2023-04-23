@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Log in{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="/static/style.css">
+
+<div class='container'>
+<h1 class='text-center p-3'>Log in</h1>
+<p class="lead text-center">Login Below. Don't have an account? <a href="/register">Register here</a></p>
+
+
+  <form class='row justify-content-center' method="POST">
+    <div class='col-md-6 border shadow p-4 mx-md-0'>
+
+    {{ form.hidden_tag() }}
+
+    {% for field in form
+    if field.widget.input_type != 'hidden' %}
+    <p>
+      {{ field.label }}
+      {{ field(class_="form-control") }}
+
+      {% for error in field.errors %}
+      <span class="form-text text-danger">{{ error }}</span>
+      {% endfor %}
+    </p>
+    {% endfor %}
+
+    <button class="btn btn-success" type="submit">Login</button>
+  </div>
+  </form>
+</div>
+{% endblock %}

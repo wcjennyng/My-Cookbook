@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="/static/style.css">
+
+<div class='container'>
+  <h1 class='text-center p-3'>Register</h1>
+  <p class="lead text-center">Fill out the form below to create an account!</p>
+
+  <form class='row justify-content-center' method="POST">
+    <div class='col-md-6 border shadow p-4 mx-md-0'>
+
+    {{ form.hidden_tag() }}
+
+    {% for field in form
+    if field.widget.input_type != 'hidden' %}
+    <p>
+      {{ field.label }}
+      {{ field(class_="form-control") }}
+      {% for error in field.errors %}
+      <span class="form-text text-danger">{{ error }}</span>
+      {% endfor %}
+    </p>
+    {% endfor %}
+
+    <button class="btn btn-success" type="submit">Register</button>
+  
+</div>
+  </form>
+</div>
+{% endblock %}

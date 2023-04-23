@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit User Recipe{% endblock %}
+
+{% block content %}
+
+<h1>Edit Your Recipe</h1>
+
+<form method="POST" action="/userrecipe/{{ recipe.id }}/update">
+  {{ form.hidden_tag() }} 
+  {% for field in form if field.widget.input_type != 'hidden' %}
+     
+  <div class='form-group'>
+  {{ field.label }}
+  {% if field.widget.input_type != 'checkbox' %}
+      {{ field(class="form-control") }}
+  {% endif %}
+      {% if field.widget.input_type == 'checkbox' %}
+      {{ field() }}
+  {% endif %}
+
+      <span>
+          {% if field.errors %}
+              {% for error in field.errors %}
+                <b class="text-danger">{{ error }}</b>
+              {% endfor %}
+          {% endif %}
+      </span>
+  </div>
+  {% endfor %}
+
+<a href="/users/{{ recipe.username }}" class="btn btn-outline-info">Cancel</a>
+<button class="btn btn-success">Update</button>
+</form>
+
+{% endblock %}

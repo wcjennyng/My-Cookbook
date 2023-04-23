@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+
+{% block title %}Favorites{% endblock %}
+
+{% block content %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="/static/style.css">
+
+<style>
+    .modal-header,
+    h4,
+    .close {
+        text-align: center;
+        font-size: 30px;
+    }
+
+    .modal-footer {
+        background-color: #f9f9f9;
+    }
+
+
+
+</style>
+
+
+
+<h3><b>{{user.first_name}}'s Favorites List </b></h3>
+<p>(👤: created by user)</p>
+
+<hr />
+<div style='padding-bottom: 20px'>
+
+    {% for recipe in user.recipe %}
+
+    {% if recipe.favorite %}
+
+
+
+    <li style='padding: 5px; list-style-type: "👤";'>
+        <!-- Trigger the modal with a button -->
+        {{ recipe.name }}
+
+        <button type="button" class="btn btn-sm btn-outline-primary px-1" data-toggle="modal"
+            data-target="#myModal{{recipe.id}}" data-recipe="recipe" id="popoverView" data-content="
+            View Recipe" rel="popover" data-placement="top" data-trigger="hover">
+            🔍
+        </button>
+
+        <form style="display:inline;" action="/userrecipe/{{ recipe.id }}/delete" method='POST'>
+            {{ form.hidden_tag() }}
+            <button id="popoverDelete" data-content="
+            Note: If a recipe you created is deleted, it will be permanently deleted.
+            Please edit to unfavorite your recipe." rel="popover" data-placement="top" data-trigger="hover"
+                class="btn btn-sm btn-outline-danger">X</button>
+        </form>
+        <form style="display:inline;" action='/userrecipe/{{ recipe.id }}/update'>
+            <button class='btn btn-outline-success btn-sm'>Edit</button>
+        </form>
+
+
+    </li>
+
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade" id="myModal{{recipe.id}}" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style="padding:20px 40px;">
+                        <h3 class="modal-title">{{ recipe.name }}</h3>
+                    </div>
+                    <div class="modal-body" style="padding:40px 50px;">
+                        <p><img class='img-thumbnail' src='{{recipe.image()}}'></p>
+                        <p> <b>Ingredients:</b>
+                        <pre>{{ recipe.ingredients }}</pre>
+                        </p>
+
+                        <p><b>Instructions:</b>
+                        <pre>{{ recipe.instructions }}</pre>
+                        </p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
+    {% endfor %}
+
+    {% for favorite in favorites %}
+    <li style='padding: 5px; list-style-type: "🍽️";'>
+        <!-- Trigger the modal with a button -->
+        {{ favorite.name }}
+        <button type="button" class="btn btn-sm btn-outline-primary px-1" data-toggle="modal"
+            data-target="#myModal-fav-{{favorite.id}}" data-recipe="favorite" id="popoverView" data-content="
+            View Recipe" rel="popover" data-placement="top" data-trigger="hover">
+            🔍
+        </button>
+
+        <form style="display:inline;" action="/users/{{ favorite.id }}/delete" method='POST'>
+            {{ form.hidden_tag() }}
+
+            <button 
+                class="btn btn-sm btn-outline-danger">X</button>
+        </form>
+        <form style="display:inline;" action='/users/{{ favorite.id }}/update'>
+            <button class='btn btn-outline-success btn-sm'>Edit</button>
+        </form>
+        <div class="container">
+            <!-- Modal -->
+            <div class="modal fade" id="myModal-fav-{{favorite.id}}" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="padding:20px 40px;">
+                            <h3 class="modal-title">{{ favorite.name }}</h3>
+                        </div>
+                        <div class="modal-body" style="padding:40px 50px;">
+                            <p><img class='img-thumbnail' src='{{favorite.photo_url}}'></p>
+                            <p> <b>Ingredients:</b>
+                            <pre>{{ favorite.measures }} {{ favorite.ingredients }}</pre>
+                            </p>
+
+                            <p><b>Instructions:</b>
+                            <pre>{{ favorite.instructions }}</pre>
+                            </p>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+
+</div>
+
+<script>
+    var favorites = '{{ favorites }}'
+    var username = '{{ username }}'
+    var user = '{{ user }}'
+    var favorite = '{{ favorite }}'
+    var recipe = '{{ recipe }}'
+    var recipe = '{{ recipe.id }}'
+
+    $(document).ready(function () {
+        $("[id=popoverDelete]").popover({container: 'body'});
+        $("[id=popoverView]").popover({container: 'body'});
+        $('#myBtn').click(function () {
+            $('#myModal' + recipe).modal()
+        })
+    })
+
+    
+
+</script>
+
+<script src="/static/searchrecipe.js"></script>
+
+{% endblock %}

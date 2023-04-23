@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Search a Recipe{% endblock %}
+
+{% block content %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/jquery"></script>
+    <link rel="stylesheet" href="/static/style.css">
+
+    <title>Search a Recipe</title>
+</head>
+<body>
+    <div style="align-items:center; justify-content:center; text-align: center;">
+    <h2 style="font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Search for a Recipe by Name</h2>
+
+    <form id="name-form">
+        <div> <input placeholder='Enter a recipe name' id="name">  <button class="btn btn-success py-1 px-2">Go!</button></div>
+        <p><b id='name_err' class='text-danger'></b></p>
+    </form>
+
+    <div class="card-deck d-flex justify-content-center" id="search-results"></div>
+
+    <div class="mb-3" id='searched'></div>
+
+    </div>
+
+
+<script>
+    const username = JSON.parse('{{ user.username | tojson }}')
+</script>
+
+<script src="https://unpkg.com/axios/dist/axios.js"></script>
+<script src="/static/searchrecipe.js"></script>
+</body>
+</html>
+
+
+
+
+
+{% endblock %}

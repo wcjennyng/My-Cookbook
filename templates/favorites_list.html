@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<style>
+    .modal-header, h4, .close {
+      background-color: #5cb85c;
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+    }
+    .modal-footer {
+      background-color: #f9f9f9;
+    }
+</style>
+
+<h1>Favorites List</h1>
+
+{% for recipe in user.favorite %}
+        
+        <li><!-- Trigger the modal with a button -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal{{recipe.id}}" data-recipe="recipe">
+            {{ recipe.name }}
+            </button>
+        </li>
+
+        <div class="container">
+        <!-- Modal -->
+        <div class="modal fade" id="myModal{{recipe.id}}" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+  
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="padding:20px 40px;">
+                    <h4 class="modal-title">{{ recipe.name }}</h4>
+                </div>
+                <div class="modal-body" style="padding:40px 50px;">
+                    <p><img class='img-thumbnail' src='{{recipe.image()}}'></p>
+                    <p> Ingredients:
+                        <pre>{{ recipe.ingredients }}</pre></p>
+                      
+                      <p>Instructions:
+                        <pre>{{ recipe.instructions }}</pre></p>
+        
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+                </div>
+    
+            </div>
+        </div>
+        </div>
+
+{% endfor %}
+
+
+ 
+<script>
+var recipe = '{{ recipe.id }}'
+$(document).ready(function(){
+    $('#myBtn').click(function(){
+        $('#myModal' + recipe).modal()
+    })
+})
+</script> 
+
+<script src="/static/searchrecipe.js"></script>
+
+
+{% endblock %}
