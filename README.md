@@ -17,6 +17,7 @@ When you think of digital recipe book, you can think of this site! My cookbook i
 - SQLAlchemy
 - Jinja
 - Javascript
+- HTML
 - Bcrypt
 - WTForms
 
