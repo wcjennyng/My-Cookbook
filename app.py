@@ -382,5 +382,11 @@ def deleteFav(favorites_id):
 
     return redirect(f"/users/{favorite.username}/favorites")
 
+<<<<<<< HEAD
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
+=======
+
+
+    
+>>>>>>> 62ecde59b9a806c2f23e8bf33de0b08bdc3f7b0d
